@@ -6,7 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+home = "0.5"
 toml = "0.5.6"
 serde_derive = "1.0.104"
 serde = "1.0.104"
 datetime = "0.4.7"
+
+[[bin]]
+name = "jsj"
+path = "src/main.rs"

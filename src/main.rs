@@ -29,13 +29,15 @@ fn find_last_string(table: &toml::value::Table, args: Vec<String>) -> Option<Str
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let file_path = "jump.toml";
-    let file = match std::fs::read_to_string(file_path) {
+    // println!("file root: {}", std::env::current_dir().unwrap().display());
+    let home_path = std::env::var("HOME").unwrap();
+    let file_path = home_path + "/.config/just-jump/jump.toml";
+    let file = match std::fs::read_to_string(&file_path) {
         Ok(f) => f,
-        Err(e) => panic!("Error: {}", e),
+        Err(e) => panic!("Error: {}, file path: {}", e, file_path),
     };
     let table: Table = toml::from_str(&file)?;
-    dbg!(&table);
+    // dbg!(&table);
     let args: Vec<String> = std::env::args().collect();
     let link = find_last_string(&table, args).unwrap();
     println!("{link}");
