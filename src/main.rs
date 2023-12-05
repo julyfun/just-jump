@@ -20,8 +20,21 @@ fn find_last_string(table: &toml::value::Table, args: Vec<String>) -> Option<Str
     println!("hello");
     if let Some(last_key) = args.last() {
         if let Some(value) = current.get(last_key) {
-            if let toml::Value::String(s) = value {
-                return Some(s.to_string());
+            // if let toml::Value::String(s) = vajj
+            //     return Some(s.to_string());
+            // } else if let toml::Value::Table(s)
+            match value {
+                toml::Value::String(s) => return Some(s.to_string()),
+                toml::Value::Table(t) => {
+                    if let Some(main) = t.get("main") {
+                        if let toml::Value::String(s) = main {
+                            return Some(s.to_string());
+                        }
+                    } else {
+                        return None;
+                    }
+                }
+                _ => return None,
             }
         }
     }
